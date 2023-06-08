@@ -1,5 +1,6 @@
 package com.miooyuki.docsys;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.miooyuki.docsys.entity.DocumentList;
 import com.miooyuki.docsys.mapper.DocumentListMapper;
 import org.junit.Test;
@@ -30,6 +31,17 @@ public class DocSystemTest {
             list.add(str);
         }
         System.out.println(list);
+    }
+
+    @Test
+    public void testPage() {
+
+        Page<DocumentList> page = Page.of(1, 7);
+        for (DocumentList record : documentListMapper.selectPage(page, null).getRecords()) {
+            System.out.println(record);
+        }
+        System.out.println(documentListMapper.selectPage(page, null).getTotal());
+
     }
 
 }

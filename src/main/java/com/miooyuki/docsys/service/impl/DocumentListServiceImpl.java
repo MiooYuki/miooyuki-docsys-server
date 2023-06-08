@@ -1,5 +1,6 @@
 package com.miooyuki.docsys.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.miooyuki.docsys.entity.DocumentList;
 import com.miooyuki.docsys.mapper.DocumentListMapper;
 import com.miooyuki.docsys.service.DocumentListService;
@@ -27,6 +28,12 @@ public class DocumentListServiceImpl implements DocumentListService {
             list.add(str);
         }
         return list;
+    }
+
+    @Override
+    public Page<DocumentList> findPage(long current, long size) {
+        Page<DocumentList> page = Page.of(current, size);
+        return documentListMapper.selectPage(page, null);
     }
 
 }

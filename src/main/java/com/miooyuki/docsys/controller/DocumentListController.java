@@ -1,12 +1,11 @@
 package com.miooyuki.docsys.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.miooyuki.docsys.entity.DocumentList;
 import com.miooyuki.docsys.service.DocumentListService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,6 +28,11 @@ public class DocumentListController {
     @GetMapping("/list")
     public List<List<String>> findAll() {
         return documentListService.findAll();
+    }
+
+    @GetMapping("/list/{current}/{size}")
+    public Page<DocumentList> findPage(@PathVariable("current") long current, @PathVariable("size") long size) {
+        return documentListService.findPage(current, size);
     }
 
 }
