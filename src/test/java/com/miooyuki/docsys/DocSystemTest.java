@@ -1,8 +1,12 @@
 package com.miooyuki.docsys;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.miooyuki.docsys.entity.DocumentList;
+import com.miooyuki.docsys.entity.toolbox.TenantProduct;
 import com.miooyuki.docsys.mapper.DocumentListMapper;
+import com.miooyuki.docsys.mapper.toolbox.TenantMapper;
+import com.miooyuki.docsys.mapper.toolbox.TenantProductMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,12 @@ public class DocSystemTest {
 
     @Autowired
     DocumentListMapper documentListMapper;
+
+    @Autowired
+    TenantMapper tenantMapper;
+
+    @Autowired
+    TenantProductMapper tenantProductMapper;
 
     @Test
     public void test() {
@@ -41,6 +51,15 @@ public class DocSystemTest {
             System.out.println(record);
         }
         System.out.println(documentListMapper.selectPage(page, null).getTotal());
+
+    }
+
+    @Test
+    public void queryTenant() {
+
+        LambdaQueryWrapper<TenantProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(TenantProduct::getTenantId, "31");
+        System.out.println(tenantProductMapper.selectList(queryWrapper));
 
     }
 
