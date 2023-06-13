@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 public class TenantProduct {
 
-    private String id;
+    private Integer id;
     private String tenantId;
     private String name;
     private String code;
