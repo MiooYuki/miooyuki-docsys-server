@@ -2,21 +2,21 @@ package com.miooyuki.docsystem.controller;
 
 import com.miooyuki.docsystem.common.PageBean;
 import com.miooyuki.docsystem.common.ResponseResult;
-import com.miooyuki.docsystem.entity.DocumentEntity;
+import com.miooyuki.docsystem.common.enums.ResponseStatusEnum;
+import com.miooyuki.docsystem.entity.dto.DocumentDto;
 import com.miooyuki.docsystem.entity.vo.DocumentVo;
-import com.miooyuki.docsystem.mapper.DocumentMapper;
 import com.miooyuki.docsystem.service.DocumentListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/documents")
 public class DocumentListController {
-
-    @Autowired
-    DocumentMapper documentMapper;
 
     @Autowired
     DocumentListService documentListService;
@@ -43,12 +43,21 @@ public class DocumentListController {
 
     /**
      * 创建文档
-     * @param document 文档对象
+     * @param documentDto 文档信息
+     * @return 创建结果的响应结果
      */
     @PostMapping("/create")
-    public void create(@RequestBody DocumentEntity document) {
-        System.out.println(document);
-        documentMapper.insert(document);
+    public ResponseResult<String> create(@RequestBody DocumentDto documentDto) {
+        return documentListService.createDoc(documentDto);
+    }
+
+    /**
+     * 上传文件
+     * @param file 上传的文件
+     */
+    @PostMapping("/upload")
+    public ResponseResult<String> upload(MultipartFile file) throws IOException {
+        return documentListService.localUpload(file);
     }
 
 }
